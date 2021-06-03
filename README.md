@@ -1,1 +1,2 @@
-# newSnake
+# Snakegame
+Classic Snake Game
