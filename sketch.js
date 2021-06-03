@@ -83,7 +83,7 @@ function draw() {
     }
 
     //blue cherry
-    if(World.frameCount % 80 === 0){
+    if(World.frameCount % 90 === 0){
       var bcherry = createSprite(random(50, 500), random(50, 500), unitWidth, unitWidth);
       bcherry.addImage(blCherryImg);
       bcherry.scale = 0.3;
@@ -101,7 +101,7 @@ function draw() {
     }
 
     //bomb
-    if(World.frameCount % 150 === 0){
+    if(World.frameCount % 160 === 0){
       var bombC = createSprite(random(50, 500), random(50, 500), unitWidth, unitWidth);
       bombC.addImage(bomb);
       bombC.scale = 0.2;
