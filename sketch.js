@@ -1,6 +1,7 @@
 var unitWidth = 25;
 var speed = 7;
 gameState = 0;
+var reset;
 START = 0;
 PLAY = 1;
 END = 2;
@@ -14,6 +15,8 @@ function preload(){
     bomb = loadImage("images/cherry.png");
     hiss = loadSound("snakeSound.mp3");
     img = loadImage("images/start.png");
+    s = loadImage("images/s.png");
+    restart = loadImage("images/reset.png");
 }
 
 function setup(){
@@ -25,10 +28,13 @@ function setup(){
     bcherryGroup = createGroup();
     ycherryGroup = createGroup();
 
-    snake = createSprite(200, 200, unitWidth, unitWidth);
+    snake = createSprite(100, 100, unitWidth, unitWidth);
     snake.addImage(snakeImg);
     snake.scale = 0.06;
-    snake.velocityX = unitWidth;
+    //snake.velocityX = unitWidth;
+
+    reset = createSprite(300, 300, 70, 70);
+    reset.addImage(restart);
     
     edges = createEdgeSprites();
 
@@ -44,16 +50,28 @@ function draw() {
   imageMode(CENTER);
   World.frameRate = speed;
 
-  /*
   if(gameState === START){
+    snake.visible = false;
+    reset.visible = false;
     image(img, 300, 30, 300, 150);
-    text("Try to eat all cherries and beware of the bombs!");
+    image(s, 300, 140, 200, 60);
+    //image();
+    textSize(20);
+    fill(rgb(255, 204, 0));
+    strokeWeight(2);
+    stroke("black");
+    text("Try to eat all cherries and beware of the bombs!", width/2-220, 200);
+    text("Use arrow keys to control the snake!", width/2-180, 250);
+    strokeWeight(5);
+    text("Click 'space' to play!", 205, 550);
     if(keyDown("space")){
       gameState = PLAY;
-    }
-  }*/
+    } 
+  }
 
-  if(gameState !== END){ 
+  if(gameState !== END && gameState !== START){
+    snake.visible = true;
+    reset.visible = false;
     // move the sprite  
     if(keyDown("up")){
       snake.setSpeedAndDirection(unitWidth, -90);
@@ -160,20 +178,29 @@ function draw() {
 
   //end state
   if(gameState === END){
+    reset.visible = true;
     fill("red");
     textSize(40);
-    text("GAME OVER", 180, 300); 
+    text("GAME OVER", 180, 250); 
     bocherryGroup.destroyEach();
     rcherryGroup.destroyEach();
     bcherryGroup.destroyEach(); 
     ycherryGroup.destroyEach();
+    
     snake.velocityX = 0;
     snake.velocityY = 0;
+   
+    if(mousePressedOver(reset)){
+      gameState = PLAY;
+      group.destroyEach();
+    }
   }
 
-  fill("green");
-  textSize(25);
-  text("SCORE:  "+score, 10, 30);
-    
+  if(gameState !== START){
+    fill("green");
+    textSize(25);
+    text("SCORE:  "+score, 10, 30);
+    }
+
   drawSprites();
 }
