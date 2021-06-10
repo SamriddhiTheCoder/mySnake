@@ -14,6 +14,7 @@ function preload(){
     yCherryImg = loadImage("images/Ycherry.png");
     bomb = loadImage("images/cherry.png");
     hiss = loadSound("snakeSound.mp3");
+    over = loadSound("over.mp3");
     img = loadImage("images/start.png");
     s = loadImage("images/s.png");
     restart = loadImage("images/reset.png");
@@ -89,6 +90,7 @@ function draw() {
     //if there's a collision with the edges or ourself, we die
     if(edges.isTouching(snake) || group.isTouching(snake)){
       gameState = END;
+      over.play();
     }
 
     //red cherry
@@ -164,6 +166,7 @@ function draw() {
       //bomb collide
       for(var a = 0; a < bocherryGroup.length; a++){
         if(bocherryGroup.isTouching(snake)){
+          over.play();
           gameState = END;
           bocherryGroup.get(a).destroy(); 
         }
@@ -198,7 +201,7 @@ function draw() {
       snake.addImage(snakeImg);
       snake.scale = 0.06;
       group.add(snake);
-      score = 0 ;
+      score = 0;
     }
   }
 
