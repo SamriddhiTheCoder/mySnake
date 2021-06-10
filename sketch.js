@@ -186,6 +186,7 @@ function draw() {
     rcherryGroup.destroyEach();
     bcherryGroup.destroyEach(); 
     ycherryGroup.destroyEach();
+    group.destroyEach();
     
     snake.velocityX = 0;
     snake.velocityY = 0;
@@ -193,6 +194,11 @@ function draw() {
     if(mousePressedOver(reset)){
       gameState = PLAY;
       group.destroyEach();
+      snake = createSprite(100, 100, unitWidth, unitWidth);
+      snake.addImage(snakeImg);
+      snake.scale = 0.06;
+      group.add(snake);
+      score = 0 ;
     }
   }
 
